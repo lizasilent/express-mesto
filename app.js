@@ -1,10 +1,12 @@
 const express = require('express');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, BASE_PATH } = process.env;
 
 const app = express();
 
-app.listen(PORT, () => {
+app.use(express.static(__dirname, 'public'));
 
-    console.log(`App listening on port ${PORT}`)
+app.listen(PORT, () => {
+  console.log('Ссылка на сервер:');
+  console.log(BASE_PATH);
 })
