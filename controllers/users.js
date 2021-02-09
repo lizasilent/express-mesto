@@ -9,15 +9,20 @@ const getUsers = (req, res) => {getDataFromFile(usersDataPath)
 }
 
 
-const getUserProfile = (res, req) => {getDataFromFile(usersDataPath)
-        .then(users => users.find(user => user.id === req.params.id))
-        .then(user => {
+const getUserProfile = (res, req) => {
+
+  return getDataFromFile(usersDataPath)
+  .then(users => users.find(user => user._id === req.params.id)
+  )
+  .then(user => {
           if (!user) {
             return res.status(404).send({message: "Нет пользователя с таким id"})
           }
-          res.status(200).send(user);
+            res.status(200).send(user);
+
         })
-        .catch(err => res.status(400).send(err));
+  .catch(error => res.status(400).send(error));
+
   };
 
 
