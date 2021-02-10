@@ -18,9 +18,10 @@ app.use("/users", usersRouter);
 app.use("/cards", cardsRouter);
 
 
-// app.use((req, res) => {
-//   res(req);
+// app.get("*", (req, res) => {
+//   res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
 // });
+
 
 
 app.use(express.static(path.join(__dirname, 'public')));
