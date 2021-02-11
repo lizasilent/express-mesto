@@ -7,7 +7,10 @@ const cardsRouter = require('./routes/cards');
 
 const PORT = 3000;
 
-app.listen(PORT);
+app.listen(PORT, () => (
+  // eslint-disable-next-line no-console
+  console.log(PORT)
+));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', usersRouter);
