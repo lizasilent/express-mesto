@@ -5,7 +5,7 @@ const usersDataPath = path.join(__dirname, '..', 'data', 'users.json');
 
 const getUsers = (req, res) => {
   getDataFromFile(usersDataPath).then((users) => res.status(200).send(users))
-    .catch((err) => res.status(500).send(err));
+    .catch(() => res.status(500).send({ message: 'Запрашиваемый файл не найден' }));
 };
 
 const getUserProfile = (req, res) => getDataFromFile(usersDataPath)
@@ -16,6 +16,6 @@ const getUserProfile = (req, res) => getDataFromFile(usersDataPath)
     }
     return res.status(200).send(user);
   })
-  .catch((error) => res.status(500).send(error));
+  .catch(() => res.status(500).send({ message: 'Запрашиваемый файл не найден' }));
 
 module.exports = { getUsers, getUserProfile };
