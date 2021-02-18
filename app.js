@@ -2,6 +2,7 @@ const express = require('express');
 
 const app = express();
 const path = require('path');
+const mongoose = require('mongoose');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 
@@ -12,6 +13,11 @@ app.listen(PORT, () => (
   console.log(PORT)
 ));
 
+mongoose.connect('mongodb://localhost:27017/mydb', {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+});
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', usersRouter);
 app.use('/', cardsRouter);
