@@ -13,7 +13,7 @@ app.listen(PORT, () => (
   console.log(PORT)
 ));
 
-mongoose.connect('mongodb://localhost:27017/mydb', {
+mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
