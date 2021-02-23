@@ -17,12 +17,12 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     validate: {
-      validator: function(v) {
+      validator(v) {
         return /^(ftp|http|https):\/\/[^ "]+$/.test(v);
       },
-      message: props => `Ошибка в ссылке ${props.value}`
+      message: (props) => `Ошибка в ссылке ${props.value}`,
     },
-    required: [true, 'Ошибки в ссылке нет']
+    required: [true, 'Ошибки в ссылке нет'],
   },
 
 });

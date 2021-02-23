@@ -10,14 +10,12 @@ const cardSchema = new mongoose.Schema({
   link: {
     type: String,
     validate: {
-      validator: function(v) {
+      validator(v) {
         return /^(ftp|http|https):\/\/[^ "]+$/.test(v);
       },
-      message: props => `Ошибка в ссылке ${props.value}`
+      message: (props) => `Ошибка в ссылке ${props.value}`,
     },
-    required: [true, 'Ошибки в ссылке нет']
-    }
-  },
+    required: [true, 'Ошибки в ссылке нет']},
   owner: {
     type: ObjectId,
     required: true,
@@ -29,8 +27,7 @@ const cardSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
-
 
 module.exports = mongoose.model('card', cardSchema);

@@ -8,4 +8,8 @@ const getCards = (req, res) => {
     .catch(() => res.status(500).send({ message: 'Запрашиваемый файл не найден' }));
 };
 
-module.exports = getCards;
+const createCard = (req, res) => {
+  console.log(req.user._id); // _id станет доступен
+};
+
+module.exports = { getCards, createCard };
