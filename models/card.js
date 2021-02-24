@@ -15,13 +15,16 @@ const cardSchema = new mongoose.Schema({
       },
       message: (props) => `Ошибка в ссылке ${props.value}`,
     },
-    required: [true, 'Ошибки в ссылке нет']},
+    required: [true, 'Ошибки в ссылке нет'],
+  },
   owner: {
-    type: ObjectId,
+    type: String,
+    _id: mongoose.ObjectId,
     required: true,
   },
   likes: {
-    type: ObjectId,
+    type: String,
+    _id: mongoose.ObjectId,
     default: [],
   },
   createdAt: {

@@ -1,15 +1,21 @@
-const path = require('path');
-const getDataFromFile = require('../helpers/files');
+const Card = require('../models/card');
 
-const usersDataPath = path.join(__dirname, '..', 'data', 'cards.json');
+// Получить список всех карточек
+const getCards = (req, res) => Card.find({})
+  .then((cards) => res.status(200).send(cards))
+  .catch(() => res.status(500).send({ message: 'Запрашиваемый файл не найден' }));
 
-const getCards = (req, res) => {
-  getDataFromFile(usersDataPath).then((cards) => res.status(200).send(cards))
-    .catch(() => res.status(500).send({ message: 'Запрашиваемый файл не найден' }));
-};
-
+// Создать карточку
 const createCard = (req, res) => {
-  console.log(req.user._id); // _id станет доступен
+  const { name, link } = req.body;
+  Card.create({ name, link })
+    .then((card) => res.send(card))
+    .catch((err) => res.status(500).send({ message: 'Произошла ошибка' } + err));
 };
 
-module.exports = { getCards, createCard };
+// Удалить карточку
+const deleteCard = (req, res) => Card.findByIdAndRemove(req.params.id)
+  .then((card) => res.send(card))
+  .catch((err) => res.status(500).send({ message: 'Произошла ошибка' } + err));
+
+module.exports = { getCards, createCard, deleteCard };
