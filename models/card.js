@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const user = require('./user');
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -11,22 +12,22 @@ const cardSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator(v) {
-        return /^(ftp|http|https):\/\/[^ "]+$/.test(v);
+        return /^(http:|https:)\/\/w*\w/.test(v);
       },
       message: (props) => `Ошибка в ссылке ${props.value}`,
     },
     required: [true, 'Ошибки в ссылке нет'],
   },
   owner: {
-    type: String,
-    _id: mongoose.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: user,
   },
-  likes: {
-    type: String,
-    _id: mongoose.ObjectId,
+  likes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: user,
     default: [],
-  },
+  }],
   createdAt: {
     type: Date,
     default: Date.now,

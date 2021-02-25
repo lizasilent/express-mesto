@@ -9,15 +9,24 @@ const getCards = (req, res) => Card.find({})
 // Создать карточку
 const createCard = (req, res) => {
   const { name, link } = req.body;
-  Card.create({ name, link })
-    .then((card) => res.send(card))
-    .catch((err) => res.status(400).send({ message: 'Не удалось создать карточку' }));
+  const owner = req.user._id;
+
+  Card.create({ name, link, owner })
+    .then((card) => res.status(200).send(card))
+    .catch((err) => res.status(400).send({ message: 'Не удалось создать карточку' } + err));
 };
 
 // Удалить карточку
-const deleteCard = (req, res) => Card.findByIdAndRemove(req.params.id)
-  .then((card) => res.send(card))
-  .catch((err) => res.status(500).send({ message: 'Произошла ошибка' } + err));
+const deleteCard = (req, res) => {
+  Card.findOneAndRemove({ owner: req.user._id, _id: req.params.cardId })
+    .then((card) => {
+      if (!card) {
+        return res.status(404).send({ message: 'Не удалось удалить карточку' });
+      }
+      return res.status(200).send(card);
+    })
+    .catch(() => res.status(500).send({ message: 'Запрашиваемый файл не найден' }));
+};
 
 // Поставить карточке лайк
 const putLike = (req, res) => Card.findByIdAndUpdate(
