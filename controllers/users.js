@@ -6,19 +6,18 @@ const getUsers = (req, res) => User.find({})
   .catch(() => res.status(404).send({ message: 'Запрашиваемый файл не найден' }));
 
 // Получить одного юзера по id
-// const getUserProfile = (req, res) => User.findById(req.params.id)
-//   .then((users) => users.find((user) => user._id === req.params.id))
-//   .then((user) => {
-//     if (!user) {
-//       return res.status(404).send({ message: 'Нет пользователя с таким id' });
-//     }
-//     return res.status(200).send(user);
-//   })
-//   .catch(() => res.status(500).send({ message: 'Ошибка сервера' }));
+// const getUserProfile = (req, res) => User.findbyId({ id: req.params.id })
+//   .then((user) => res.status(200).send(user))
+//   .catch(() => res.status(404).send({ message: 'Нет пользователя с таким id' }));
 
-// const getUserProfile = (req, res) => User.findById(req.params.id)
-// .then((user) => res.status(200).send(user))
-// .catch(() => res.status(404).send({ message: 'Нет пользователя с таким id' }));
+const getUserProfile = (req, res) => User.findOne(req.params.id)
+  .then((user) => {
+    if (!user) {
+      return res.status(404).send({ message: 'Нет пользователя с таким id' });
+    }
+    return res.status(200).send(user);
+  })
+  .catch(() => res.status(500).send({ message: 'Запрашиваемый файл не найден' }));
 
 // Создать юзера
 const createUser = (req, res) => {
