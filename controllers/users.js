@@ -24,10 +24,9 @@ const createUser = (req, res) => {
 };
 
 // Обновить инфо юзера
-const updateUserInfo = (req, res) => User.findByIdAndUpdate(req.user._id, { name: 'Тестим'})
+const updateUserInfo = (req, res) => User.findByIdAndUpdate(req.user._id, { name: req.user.name, })
   .then(({ name, about }) => res.status(200).send({ name, about }))
   .catch((err) => res.status(500).send({ message: 'Произошла ошибка' }) + err);
-
 
 // Обновить аватар
 const updateAvatar = (req, res) => User.findByIdAndUpdate(req.user._id, { avatar })

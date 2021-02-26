@@ -10,7 +10,7 @@ const getCards = (req, res) => Card.find({})
 const createCard = (req, res) => {
   const { name, link } = req.body;
   const owner = req.user._id;
-
+  
   Card.create({ name, link, owner })
     .then((card) => res.status(200).send(card))
     .catch((err) => res.status(400).send({ message: 'Не удалось создать карточку' } + err));
