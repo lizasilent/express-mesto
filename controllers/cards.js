@@ -8,12 +8,12 @@ const getCards = (req, res) => Card.find({})
 
 // Создать карточку
 const createCard = (req, res) => {
-  const { name, link } = req.body;
   const owner = req.user._id;
-  
+  const { name, link } = req.body;
+
   Card.create({ name, link, owner })
     .then((card) => res.status(200).send(card))
-    .catch((err) => res.status(400).send({ message: 'Не удалось создать карточку' } + err));
+    .catch((err) => res.status(400).send({ message: 'Не удалось создать карточку' }));
 };
 
 // Удалить карточку
@@ -23,7 +23,7 @@ const deleteCard = (req, res) => {
       if (!card) {
         return res.status(404).send({ message: 'Не удалось удалить карточку' });
       }
-      return res.status(200).send(card);
+      return res.status(200).send({ message: 'Карточка удалена' });
     })
     .catch(() => res.status(500).send({ message: 'Запрашиваемый файл не найден' }));
 };

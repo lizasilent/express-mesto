@@ -23,15 +23,17 @@ const createUser = (req, res) => {
     .catch(() => res.status(400).send({ message: 'Не удалось создать пользователя' }));
 };
 
-// Обновить инфо юзера
-const updateUserInfo = (req, res) => User.findByIdAndUpdate(req.user._id, { name: req.user.name, })
-  .then(({ name, about }) => res.status(200).send({ name, about }))
-  .catch((err) => res.status(500).send({ message: 'Произошла ошибка' }) + err);
+// Обновить инфо юзера;
+const updateUserInfo = (req, res) => User.findByIdAndUpdate(req.user._id,
+  { name: req.body.name, about: req.body.about })
+  .then((user) => res.send({ data: user }))
+  .catch(() => res.status(400).send({ message: 'Ошибка при обновлении информации пользователя' }));
 
 // Обновить аватар
-const updateAvatar = (req, res) => User.findByIdAndUpdate(req.user._id, { avatar })
-  .then(({ avatar }) => res.send({ avatar }))
-  .catch((err) => res.status(500).send({ message: 'Произошла ошибка' }) + err);
+const updateAvatar = (req, res) => User.findByIdAndUpdate(req.user._id,
+  { avatar: req.body.avatar })
+  .then((user) => res.send({ data: user }))
+  .catch(() => res.status(400).send({ message: 'Ошибка при обновлении аватара' }));
 
 module.exports = {
   getUsers, getUserProfile, createUser, updateUserInfo, updateAvatar,
