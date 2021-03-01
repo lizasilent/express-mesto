@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const User = require('../models/user');
 
 // Получить список всех юзеров
